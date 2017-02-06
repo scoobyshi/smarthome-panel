@@ -1,4 +1,6 @@
 import React from 'react';
+import Websocket from 'react-websocket';
+
 const url = 'http://192.168.1.60';
 const port = '5001';
 
@@ -20,7 +22,7 @@ class App extends React.Component {
   // Swap this out for event driven websocket wrapper
   componentDidMount() {
     this.musicDataSource();
-    setInterval(this.musicDataSource.bind(this), 10000);
+    // setInterval(this.musicDataSource.bind(this), 10000);
   }
 
   musicDataSource() {
@@ -71,6 +73,16 @@ class App extends React.Component {
     });
   }
 
+  handleData(data) {
+    // Should test if JSON
+    let result = JSON.parse(data);
+    // console.log(result);
+    if (result.album) {
+      console.log("Websocket - New Song: " + result.name);
+      this.setState({ currentMusic: result.name });
+    }
+  }
+
   render() {
     return (
       <div className='App'>
@@ -80,6 +92,9 @@ class App extends React.Component {
           <button type="button" onClick={this.changeMusicPlay}>Play</button>
       	  <button type="button" onClick={this.changeMusicNext}>Next</button>
           <button type="button" onClick={this.loadMusicPlay}>Load Songs</button>
+
+          <Websocket url="ws://192.168.1.60:5001/music/ws"
+            onMessage={this.handleData.bind(this)}/>
         </div>
       </div>
     );
