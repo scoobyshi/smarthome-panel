@@ -1,6 +1,16 @@
 /* eslint-disable no-undef */
-function playingNow(query, cb) {
-  return fetch(`api/track`, {
+function musicGetService(query, cb) {
+  return fetch(query, {
+    method: 'GET',
+    accept: 'application/json',
+  }).then(checkStatus)
+    .then(parseJSON)
+    .then(cb);
+}
+
+function musicPostService(query, cb) {
+  return fetch(query, {
+    method: 'POST',
     accept: 'application/json',
   }).then(checkStatus)
     .then(parseJSON)
@@ -23,5 +33,5 @@ function parseJSON(response) {
   return response.json();
 }
 
-const Client = { playingNow };
+const Client = { musicGetService, musicPostService };
 export default Client;

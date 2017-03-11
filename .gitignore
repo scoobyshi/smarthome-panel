@@ -4,6 +4,10 @@ node_modules
 # testing
 coverage
 
+# images
+images
+src/images
+
 # production
 build
 
