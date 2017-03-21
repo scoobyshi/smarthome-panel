@@ -61,7 +61,7 @@ class MusicBox extends React.Component {
       currentMusic: "Unknown",
       currentAlbum: "Unknown",
       playMode: "play/stop",
-      playlist: "",
+      playlist: null,
       togglePause: false,
       cover_art_uri: "",
       showPlayPauseButton: (<AVPlay />),
@@ -307,7 +307,7 @@ class MusicBox extends React.Component {
           </Menu>
         </Dialog>
 
-        <AlarmBox ref={(alarm) => { this._alarm = alarm; }}/>
+        <AlarmBox url={this.resturl} playlistid={this.state.playlist} ref={(alarm) => { this._alarm = alarm; }}/>
 
         <Websocket url={this.wsurl} onMessage={this.handleWSData.bind(this)}/>
       </Card>
